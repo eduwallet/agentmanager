@@ -7,3 +7,11 @@ h4 { font-style: italic; }
     display:none;
     visibility: hidden;
 }
+
+.actions {
+    .el-form-item__content {
+        a {
+            padding: 2px 10px;
+        }
+    }
+}

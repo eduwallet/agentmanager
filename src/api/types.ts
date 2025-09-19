@@ -31,3 +31,17 @@ export interface IdentifierSaveData
     keytype:string;
     original:string;
 }
+
+export interface IssuerScheme
+{
+    id: number;
+    name: string;
+    baseUrl: string;
+    adminToken: string;
+    authorizationEndpoint?:string;
+    tokenEndpoint?:string;
+    clientId?:string;
+    did:string;
+    metadata?:any;
+    statusLists?:any;
+}

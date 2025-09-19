@@ -56,8 +56,9 @@ import PresetDialog from '@/dialogs/PresetDialog.vue';
             <el-button @click="add">Add</el-button>
             <el-button @click="edit">Edit</el-button>
         </el-form-item>
-        <el-form-item label="Actions">
+        <el-form-item class='actions' label="Actions">
             <router-link to="/issuer/identifiers">Identifiers</router-link>
+            <router-link to="/issuer/issuers">Issuers</router-link>
         </el-form-item>
         <router-view />
         <PresetDialog module="issuer" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose" @on-remove="onRemove" />
