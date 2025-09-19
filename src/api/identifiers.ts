@@ -1,5 +1,5 @@
 import { bearerFetch } from "./interface"
-import { IdentifierScheme } from "./types";
+import { IdentifierSaveData, IdentifierScheme } from "./types";
 
 export async function list_identifiers()
 {
@@ -12,7 +12,7 @@ export async function list_identifiers()
         })
 }
 
-export async function save_identifier(id:IdentifierScheme)
+export async function save_identifier(id:IdentifierSaveData)
 {
     return bearerFetch(id.did === '' ? 'PUT' : 'POST', 'identifiers', id)
         .then((result) => {
@@ -20,5 +20,20 @@ export async function save_identifier(id:IdentifierScheme)
                 throw new Error("Invalid return status");
             }
             return result.json as IdentifierScheme;
+        });
+}
+
+export async function delete_identifier(id:IdentifierScheme)
+{
+    return bearerFetch('DELETE', 'identifiers', {did: id.did})
+        .then((result) => {
+            if (result.status !== 202) {
+                throw new Error("Invalid return status" + result.status);
+            }
+            return true;
+        })
+        .catch(() => {
+            console.error('caught error on deleting identifier');
+            return false;
         });
 }

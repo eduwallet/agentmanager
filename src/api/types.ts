@@ -22,3 +22,12 @@ export interface IdentifierScheme
     updated:string;
     keys:KeyScheme[];
 }
+
+export interface IdentifierSaveData
+{
+    did: string;
+    provider: string;
+    alias: string;
+    keytype:string;
+    original:string;
+}

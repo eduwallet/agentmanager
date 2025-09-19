@@ -1,13 +1,26 @@
 <script setup lang="ts">
 import { list_identifiers } from '@/api/identifiers';
 import { IdentifierScheme } from '@/api/types';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import type { Ref } from 'vue';
+import { useTokenStore } from '@/stores/token';
 const identifiers:Ref<IdentifierScheme[]> = ref([]);
+const store = useTokenStore();
 
 onMounted(async () => {
-    identifiers.value = await list_identifiers();
+    await refresh();
 });
+watch (() => store.agent, async () => { await refresh(); });
+
+async function refresh()
+{
+    try {
+        identifiers.value = await list_identifiers();
+    }
+    catch (e) {
+        identifiers.value = [];
+    }
+}
 
 const identifierDialog = ref(false);
 const identifier:Ref<IdentifierScheme> = ref({
@@ -18,6 +31,7 @@ const identifier:Ref<IdentifierScheme> = ref({
         updated: '',
         keys: []
 });
+const originalDid = ref('');
 const keytype = ref('Secp256r1');
 
 function add()
@@ -30,12 +44,34 @@ function add()
         updated: '',
         keys: []
     }
+    originalDid.value = '';
     identifierDialog.value=true;
 }
 
-function onUpdateIdentifier(field:string, value:string)
+function select(i:IdentifierScheme)
 {
+    identifier.value = i;
+    originalDid.value = i.did;
+    identifierDialog.value=true;
+}
 
+function onUpdateIdentifier(field:FieldValue)
+{
+    console.log('updating ', field);
+    switch(field.field) {
+        case 'did': {
+            if (identifier.value.provider !== 'did:web') {
+                alert('Changing did only allowed for did:web');
+            }
+            else {
+                identifier.value.did = field.value;
+            }
+            break;
+        }
+        case 'keytype': keytype.value = field.value; break;
+        case 'provider': identifier.value.provider = field.value; break;
+        case 'alias': identifier.value.alias = field.value; break;
+    }
 }
 
 function onCloseIdentifier()
@@ -50,6 +86,7 @@ async function onSaveIdentifier()
 }
 
 import IdentifierDialog from './IdentifierDialog.vue';
+import { FieldValue } from '@/types';
 </script>
 <template>
     <div>
@@ -66,7 +103,7 @@ import IdentifierDialog from './IdentifierDialog.vue';
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="identifier in identifiers" :key="identifier.did">
+                <tr v-for="identifier in identifiers" :key="identifier.did" @dblclick="() => select(identifier)">
                     <td>{{identifier.did}}</td>
                     <td>{{identifier.alias}}</td>
                     <td>{{identifier.provider}}</td>
@@ -78,7 +115,8 @@ import IdentifierDialog from './IdentifierDialog.vue';
         </table>
         <div class="actions">
             <el-button @click="add">Add</el-button>
+            <el-button @click="refresh">Refresh</el-button>
         </div>
-        <IdentifierDialog :visible="identifierDialog" @on-close="onCloseIdentifier" @on-save="onSaveIdentifier" @on-update="onUpdateIdentifier" :identifier="identifier" :keytype="keytype"/>
+        <IdentifierDialog :visible="identifierDialog" @on-close="onCloseIdentifier" @on-save="onSaveIdentifier" @on-update="onUpdateIdentifier" :identifier="identifier" :keytype="keytype" :original="originalDid"/>
     </div>
 </template>
