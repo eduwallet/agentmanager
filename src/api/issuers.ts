@@ -12,6 +12,17 @@ export async function list_issuers()
         })
 }
 
+export async function get_issuer(id:IssuerScheme)
+{
+    return bearerFetch('GET', 'issuers/' + id.id)
+        .then((result) => {
+            if (result.status !== 200) {
+                throw new Error("Invalid return status");
+            }
+            return result.json as IssuerScheme;
+        });
+}
+
 export async function save_issuer(id:IssuerScheme)
 {
     return bearerFetch(id.id <= 0 ? 'PUT' : 'POST', 'issuers', id)

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { ref } from 'vue';
 import { delete_issuer, save_issuer } from '@/api/issuers';
 import { IssuerScheme } from '@/api/types';
 
@@ -31,6 +32,23 @@ async function submitForm()
     emits('onSave');
 }
 
+const statdialog = ref(false);
+function openStat()
+{
+  statdialog.value = true;
+}
+function closeStat()
+{
+  statdialog.value = false;
+}
+
+async function updateStat(e:any)
+{
+  console.log('updating status list value ', e);
+  emits('onUpdate', {field: 'statusLists', value: e});
+}
+
+import StatusListDialog from './StatusListDialog.vue';
 </script>
 <template>
     <el-dialog :model-value="props.visible" title="Edit Issuer" :close-on-click-modal="false"  :before-close="(done:any) => { closeForm(); done(false); }">
@@ -56,12 +74,13 @@ async function submitForm()
         <el-form-item label="Client ID">
           <el-input :model-value="props.issuer.clientId" @update:model-value="(e) => update('clientId', e)"/>
         </el-form-item>
-
+        <StatusListDialog :visible="statdialog" :issuer="props.issuer" @on-close="closeStat" @on-update="(e) => updateStat(e)"/>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="warning" @click="remove">Delete</el-button>
-          <el-button type="secondary" @click="closeForm">Cancel</el-button>
+          <el-button type="success" @click="openStat">StatusLists</el-button>
+          <el-button type="danger" @click="remove">Delete</el-button>
+          <el-button type="warning" @click="closeForm">Cancel</el-button>
           <el-button type="primary" @click="submitForm">Save</el-button>
         </span>
       </template>        

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { list_issuers } from '@/api/issuers';
+import { get_issuer, list_issuers } from '@/api/issuers';
 import { IssuerScheme } from '@/api/types';
 import { ref, onMounted, watch } from 'vue';
 import type { Ref } from 'vue';
@@ -53,9 +53,9 @@ function add()
     dialog.value=true;
 }
 
-function select(i:IssuerScheme)
+async function select(i:IssuerScheme)
 {
-    issuer.value = i;
+    issuer.value = await get_issuer(i);
     dialog.value=true;
 }
 
@@ -69,11 +69,9 @@ function update(field:FieldValue)
         case 'tokenEndpoint':
         case 'clientId':
         case 'did': 
-            issuer.value[field.field] = field.value; 
-            break;
         case 'metadata':
         case 'statusLists':
-            issuer.value[field.field] = JSON.parse(field.value);
+            issuer.value[field.field] = field.value; 
             break;
     }
 }

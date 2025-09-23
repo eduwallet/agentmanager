@@ -42,4 +42,18 @@ table.listing {
     .el-form-item {
         .el-form-item__label { min-width: 200px; }
     }
+
+    .statuslistcredential {
+        position: relative;
+
+        .statuslistblock {
+            padding-left: 40px;
+        }
+
+        .addicon {
+            position: absolute;
+            right: 10px;
+            bottom: -22px;
+        }
+    }
 }
