@@ -55,3 +55,25 @@ export interface IssuerScheme
     metadata?:any;
     statusLists?:any;
 }
+
+export interface ContextScheme {
+    id?: number;
+    name:string;
+    path:string;
+    document:string;
+    documentString?:string;
+    saved: string;
+    updated:string;
+}
+
+export interface VCTScheme {
+    id?: number;
+    name:string;
+    path:string;
+    credentials:string;
+    credentialsString?:string;
+    document:string;
+    documentString?:string;
+    saved: string;
+    updated:string;
+}
