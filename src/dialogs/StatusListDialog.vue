@@ -68,7 +68,7 @@ function update(index:number, key:string, field:FieldValue)
     }
 }
 
-import StatusCredentialEntry from './StatusCredentialEntry.vue';
+import StatusCredentialEntry from './components/StatusCredentialEntry.vue';
 import { FieldValue } from '@/types';
 </script>
 <template>

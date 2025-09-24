@@ -32,6 +32,16 @@ export interface IdentifierSaveData
     original:string;
 }
 
+export interface CredentialScheme
+{
+    id?:number;
+    name: string;
+    configuration:any;
+    configurationString?:string;
+    saved?: string;
+    updated?:string;
+}
+
 export interface IssuerScheme
 {
     id: number;

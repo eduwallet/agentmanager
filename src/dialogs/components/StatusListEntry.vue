@@ -25,5 +25,6 @@ function update(fieldName:string, value: any)
         <el-form-item label="Token">
           <el-input :model-value="props.statuslist.token" @update:model-value="(e) => update('token', e)"/>
         </el-form-item>
+        <hr/>
     </div>
 </template>

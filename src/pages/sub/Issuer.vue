@@ -57,6 +57,7 @@ import PresetDialog from '@/dialogs/PresetDialog.vue';
             <el-button @click="edit">Edit</el-button>
         </el-form-item>
         <el-form-item class='actions' label="Actions">
+            <router-link to="/issuer/credentials">Credentials</router-link>
             <router-link to="/issuer/identifiers">Identifiers</router-link>
             <router-link to="/issuer/issuers">Issuers</router-link>
         </el-form-item>

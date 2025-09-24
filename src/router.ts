@@ -2,6 +2,7 @@ import { createWebHashHistory, createRouter } from 'vue-router'
 
 import MainView from './pages/sub/Main.vue'
 import IssuerView from './pages/sub/Issuer.vue'
+import IssuerCredentials from './pages/sub/issuer/Credentials.vue';
 import IssuerIdentifiers from './pages/sub/issuer/Identifiers.vue';
 import IssuerIssuers from './pages/sub/issuer/Issuers.vue';
 import VerifierView from './pages/sub/Main.vue'
@@ -13,6 +14,10 @@ const routes = [
       path: '/issuer',
       component: IssuerView,
       children: [
+        {
+          path: 'credentials',
+          component: IssuerCredentials
+        },
         {
           path: 'identifiers',
           component: IssuerIdentifiers

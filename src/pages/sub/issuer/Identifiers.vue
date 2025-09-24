@@ -85,7 +85,7 @@ async function onSaveIdentifier()
     identifiers.value = await list_identifiers();
 }
 
-import IdentifierDialog from './IdentifierDialog.vue';
+import IdentifierDialog from '../../../dialogs/IdentifierDialog.vue';
 import { FieldValue } from '@/types';
 </script>
 <template>

@@ -56,4 +56,22 @@ table.listing {
             bottom: -22px;
         }
     }
+
+    .display, .credentials {
+        position: relative;
+
+        label.display {
+            text-align: right;
+            min-width: 200px; 
+            font-weight: 700;
+            display: inline-block;
+            line-height: 2rem;
+        }
+
+        .addicon {
+            position: absolute;
+            right: 10px;
+            bottom: -22px;
+        }
+    }
 }

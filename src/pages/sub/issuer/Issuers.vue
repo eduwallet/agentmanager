@@ -87,7 +87,7 @@ async function save()
     issuers.value = await list_issuers();
 }
 
-import IssuerDialog from './IssuerDialog.vue';
+import IssuerDialog from '../../../dialogs/IssuerDialog.vue';
 import { FieldValue } from '@/types';
 </script>
 <template>
