@@ -60,20 +60,20 @@ export interface ContextScheme {
     id?: number;
     name:string;
     path:string;
-    document:string;
+    document:any;
     documentString?:string;
-    saved: string;
-    updated:string;
+    saved?: string;
+    updated?:string;
 }
 
 export interface VCTScheme {
     id?: number;
     name:string;
     path:string;
-    credentials:string;
+    credentials:string|string[];
     credentialsString?:string;
-    document:string;
+    document:any;
     documentString?:string;
-    saved: string;
-    updated:string;
+    saved?: string;
+    updated?:string;
 }

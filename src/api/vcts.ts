@@ -12,8 +12,9 @@ export async function list_vcts()
             for(const obj of (result.json.data as VCTScheme[])) {
                 obj.documentString = obj.document;
                 obj.document = JSON.parse(obj.document);
-                obj.credentialsString = obj.credentials;
+                obj.credentialsString = (obj.credentials as string) ?? '';
                 obj.credentials = JSON.parse(obj.credentialsString);
+                obj.credentialsString = (obj.credentials as string[]).join(',');
                 retval.push(obj);
             }
             return retval;
@@ -30,15 +31,16 @@ export async function save_vct(id:VCTScheme)
             const obj = result.json as VCTScheme;
             obj.documentString = obj.document;
             obj.document = JSON.parse(obj.document);
-            obj.credentialsString = obj.credentials;
-            obj.credentials = JSON.parse(obj.credentials);
+            obj.credentialsString = (obj.credentials as string) ?? '';
+            obj.credentials = JSON.parse(obj.credentialsString);
+            obj.credentialsString = (obj.credentials as string[]).join(',');
             return obj;
         });
 }
 
 export async function delete_vct(id:VCTScheme)
 {
-    return bearerFetch('DELETE', 'vct', {id: id.id})
+    return bearerFetch('DELETE', 'vcts', {id: id.id})
         .then((result) => {
             if (result.status !== 202) {
                 throw new Error("Invalid return status" + result.status);

@@ -36,7 +36,7 @@ async function submit()
 
 </script>
 <template>
-    <el-dialog :model-value="props.visible" title="Edit Identifier" :close-on-click-modal="false"  :before-close="(done:any) => { close(); done(false); }">
+    <el-dialog :model-value="props.visible" title="Edit Credential" :close-on-click-modal="false"  :before-close="(done:any) => { close(); done(false); }">
         <el-form>
         <el-form-item label="Name">
           <el-input :model-value="props.credential.name" @update:model-value="(e) => update('name', e)"/>

@@ -45,7 +45,13 @@ function selectPreset()
     agent.value = store.agent;
 }
 
+async function quit()
+{
+    await process_exit();
+}
+
 import PresetDialog from '@/dialogs/PresetDialog.vue';
+import { process_exit } from '@/api/admin';
 </script>
 <template>
     <el-form label-position="left" label-width="auto">
@@ -57,10 +63,13 @@ import PresetDialog from '@/dialogs/PresetDialog.vue';
             <el-button @click="edit">Edit</el-button>
         </el-form-item>
         <el-form-item class='actions' label="Actions">
+            <router-link to="/issuer/issuers">Issuers</router-link>
             <router-link to="/issuer/credentials">Credentials</router-link>
             <router-link to="/issuer/identifiers">Identifiers</router-link>
-            <router-link to="/issuer/issuers">Issuers</router-link>
+            <router-link to="/issuer/contexts">Contexts</router-link>
+            <router-link to="/issuer/vcts">VCTs</router-link>
         </el-form-item>
+        <el-button @click="quit">Exit server</el-button>
         <router-view />
         <PresetDialog module="issuer" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose" @on-remove="onRemove" />
     </el-form>    
