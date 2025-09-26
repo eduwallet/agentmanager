@@ -7,7 +7,8 @@ import IssuerCredentials from './pages/sub/issuer/Credentials.vue';
 import IssuerIdentifiers from './pages/sub/issuer/Identifiers.vue';
 import IssuerIssuers from './pages/sub/issuer/Issuers.vue';
 import IssuerVcts from './pages/sub/issuer/Vcts.vue';
-import VerifierView from './pages/sub/Main.vue'
+import VerifierView from './pages/sub/Verifier.vue'
+import VerifierIdentifiers from './pages/sub/verifier/Identifiers.vue';
 import StatusView from './pages/sub/Main.vue'
 
 const routes = [
@@ -38,7 +39,16 @@ const routes = [
         }
       ]
   },
-  { path: '/verifier', component: VerifierView },
+  {
+      path: '/verifier',
+      component: VerifierView,
+      children: [
+        {
+          path: 'identifiers',
+          component: VerifierIdentifiers
+        }
+      ]
+  },
   { path: '/status', component: StatusView },
 ]
 
