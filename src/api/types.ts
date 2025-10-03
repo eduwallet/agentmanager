@@ -77,3 +77,29 @@ export interface VCTScheme {
     saved?: string;
     updated?:string;
 }
+
+
+export interface PresentationScheme
+{
+    id:number;
+    shortname:string;
+    name:string;
+    purpose:string;
+    input_descriptors?:string;
+    query?:string;
+    saved: string;
+    updated:string;
+}
+
+export interface VerifierScheme
+{
+    id:number;
+    name:string;
+    path:string;
+    did:string;
+    admin_token:string;
+    presentations:string;
+    presentationsString?:string;
+    saved: string;
+    updated:string;
+}

@@ -1,6 +1,8 @@
 import { bearerFetch } from "./interface"
 import { IdentifierSaveData, IdentifierScheme } from "./types";
 
+// the identifiers API is exactly the same between issuer and verifier, so we reuse the same code
+
 export async function list_identifiers()
 {
     return bearerFetch('GET', 'identifiers')
