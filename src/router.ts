@@ -9,6 +9,8 @@ import IssuerIssuers from './pages/sub/issuer/Issuers.vue';
 import IssuerVcts from './pages/sub/issuer/Vcts.vue';
 import VerifierView from './pages/sub/Verifier.vue'
 import VerifierIdentifiers from './pages/sub/verifier/Identifiers.vue';
+import VerifierPresentations from './pages/sub/verifier/Presentations.vue';
+import VerifierVerifiers from './pages/sub/verifier/Verifiers.vue';
 import StatusView from './pages/sub/Main.vue'
 
 const routes = [
@@ -46,6 +48,14 @@ const routes = [
         {
           path: 'identifiers',
           component: VerifierIdentifiers
+        },
+        {
+          path: 'presentations',
+          component: VerifierPresentations
+        },
+        {
+          path: 'verifiers',
+          component: VerifierVerifiers
         }
       ]
   },

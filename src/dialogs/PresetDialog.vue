@@ -67,7 +67,7 @@ async function save()
     </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="warning" @click="remove">Remove</el-button>
+          <el-button type="danger" @click="remove">Remove</el-button>
           <el-button type="primary" @click="save">Save</el-button>
         </span>
       </template>

@@ -8,7 +8,17 @@ export async function list_presentations()
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
             }
-            return result.json.data as PresentationScheme[];
+            const retval:PresentationScheme[] = [];
+            for(const obj of (result.json.data as PresentationScheme[])) {
+                if (obj.input_descriptors) {
+                    obj.input_descriptors = JSON.stringify(JSON.parse(obj.input_descriptors),null, 2);
+                }
+                if (obj.query) {
+                    obj.query = JSON.stringify(JSON.parse(obj.query),null, 2);
+                }
+                retval.push(obj);
+            }
+            return retval;
         })
 }
 
@@ -19,7 +29,14 @@ export async function get_presentation(id:PresentationScheme)
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
             }
-            return result.json as PresentationScheme;
+            const retval = result.json as PresentationScheme;
+            if (retval.input_descriptors) {
+                retval.input_descriptors = JSON.stringify(JSON.parse(retval.input_descriptors),null, 2);
+            }
+            if (retval.query) {
+                retval.query = JSON.stringify(JSON.parse(retval.query),null, 2);
+            }
+            return retval;
         });
 }
 

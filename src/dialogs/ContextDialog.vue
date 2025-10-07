@@ -67,8 +67,8 @@ const livelink = computed(() => {
     </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="warning" @click="remove" v-if="(props.context.id ?? 0) > 0">Delete</el-button>
-          <el-button type="secondary" @click="close">Cancel</el-button>
+          <el-button type="danger" @click="remove" v-if="(props.context.id ?? 0) > 0">Delete</el-button>
+          <el-button type="warning" @click="close">Cancel</el-button>
           <el-button type="primary" @click="submit">Save</el-button>
         </span>
       </template>        

@@ -8,13 +8,7 @@ export async function list_verifiers()
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
             }
-            const retval:VerifierScheme[] = [];
-            for(const obj of (result.json.data as VerifierScheme[])) {
-                obj.presentationsString = obj.presentations;
-                obj.presentations = JSON.parse(obj.presentations);
-                retval.push(obj);
-            }
-            return retval;
+            return result.json.data;
         })
 }
 
@@ -25,10 +19,7 @@ export async function get_verifier(id:VerifierScheme)
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
             }
-            const obj:VerifierScheme = result.json;
-            obj.presentationsString = obj.presentations;
-            obj.presentations = JSON.parse(obj.presentations);
-            return obj;
+            return result.json;
         });
 }
 
@@ -39,10 +30,7 @@ export async function save_verifier(id:VerifierScheme)
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
             }
-            const obj:VerifierScheme = result.json;
-            obj.presentationsString = obj.presentations;
-            obj.presentations = JSON.parse(obj.presentations);
-            return obj;
+            return result.json;
         });
 }
 

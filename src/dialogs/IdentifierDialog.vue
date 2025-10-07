@@ -66,8 +66,8 @@ const types = ["Secp256r1", "Secp256k1", "Ed25519", "RSA"];
     </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="warning" @click="remove">Delete</el-button>
-          <el-button type="secondary" @click="closeForm">Cancel</el-button>
+          <el-button type="danger" @click="remove">Delete</el-button>
+          <el-button type="warning" @click="closeForm">Cancel</el-button>
           <el-button type="primary" @click="submitForm">Save</el-button>
         </span>
       </template>        

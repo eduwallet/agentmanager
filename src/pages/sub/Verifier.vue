@@ -62,6 +62,8 @@ import { process_exit } from '@/api/admin';
         </el-form-item>
         <el-form-item class='actions' label="Actions">
             <router-link to="/verifier/identifiers">Identifiers</router-link>
+            <router-link to="/verifier/presentations">Presentations</router-link>
+            <router-link to="/verifier/verifiers">Verifiers</router-link>
         </el-form-item>
         <el-button @click="quit">Exit server</el-button>
         <router-view />

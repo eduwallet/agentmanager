@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { list_presentations } from '@/api/presentations';
-import { PresentationScheme } from '@/api/types';
+import { list_verifiers } from '@/api/verifiers';
+import { VerifierScheme } from '@/api/types';
 import { ref, onMounted, watch } from 'vue';
 import type { Ref } from 'vue';
 import { useTokenStore } from '@/stores/token';
-const presentations:Ref<PresentationScheme[]> = ref([]);
+const verifiers:Ref<VerifierScheme[]> = ref([]);
 const store = useTokenStore();
 
 onMounted(async () => {
@@ -15,50 +15,55 @@ watch (() => store.agent, async () => { await refresh(); });
 async function refresh()
 {
     try {
-        presentations.value = await list_presentations();
+        verifiers.value = await list_verifiers();
     }
     catch (e) {
-        presentations.value = [];
+        console.log(e);
+        verifiers.value = [];
     }
 }
 
 const dialog = ref(false);
-const presentation:Ref<PresentationScheme> = ref({
+const verifier:Ref<VerifierScheme> = ref({
         id:-1,
-        shortname: '',
         name: '',
-        purpose: '',
+        path: '',
+        did: '',
+        admin_token: '',
+        presentations: '[]',
         saved: '',
         updated: '',
 });
 
 function add()
 {
-    presentation.value = {
+    verifier.value = {
         id:-1,
-        shortname: '',
         name: '',
-        purpose: '',
+        path: '',
+        did: '',
+        admin_token: '',
+        presentations: '[]',
         saved: '',
         updated: '',
     };
     dialog.value=true;
 }
 
-function select(i:PresentationScheme)
+function select(i:VerifierScheme)
 {
-    presentation.value = i;
+    verifier.value = i;
     dialog.value=true;
 }
 
 function update(field:FieldValue)
 {
     switch(field.field) {
-        case 'shortname': presentation.value.shortname = field.value; break;
-        case 'name': presentation.value.name = field.value; break;
-        case 'purpose': presentation.value.purpose = field.value; break;
-        case 'input_descriptors': presentation.value.input_descriptors = field.value; break;
-        case 'query': presentation.value.query = field.value; break;
+        case 'name': verifier.value.name = field.value; break;
+        case 'path': verifier.value.path = field.value; break;
+        case 'did': verifier.value.did = field.value; break;
+        case 'admin_token': verifier.value.admin_token = field.value; break;
+        case 'presentations': verifier.value.presentations = field.value; break;
     }
 }
 
@@ -70,32 +75,32 @@ function close()
 async function save()
 {
     dialog.value = false;
-    presentations.value = await list_presentations();
+    await refresh();
 }
 
-import PresentationDialog from '../../../dialogs/PresentationDialog.vue';
+import VerifierDialog from '../../../dialogs/VerifierDialog.vue';
 import { FieldValue } from '@/types';
 </script>
 <template>
     <div>
-        <h2>Presentation List</h2>
+        <h2>Verifier List</h2>
         <table class="listing">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Shortname</th>
                     <th>Name</th>
-                    <th>Purpose</th>
+                    <th>Path</th>
+                    <th>DID</th>
                     <th>Saved</th>
                     <th>Updated</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="p in presentations" :key="p.id" @dblclick="() => select(p)">
+                <tr v-for="p in verifiers" :key="p.id" @dblclick="() => select(p)">
                     <td>{{p.id}}</td>
-                    <td>{{p.shortname}}</td>
                     <td>{{p.name}}</td>
-                    <td>{{p.purpose}}</td>
+                    <td>{{p.path}}</td>
+                    <td>{{p.did}}</td>
                     <td>{{p.saved}}</td>
                     <td>{{p.updated}}</td>
                 </tr>
@@ -105,6 +110,6 @@ import { FieldValue } from '@/types';
             <el-button @click="add">Add</el-button>
             <el-button @click="refresh">Refresh</el-button>
         </div>
-        <PresentationDialog :visible="dialog" @on-close="close" @on-save="save" @on-update="update" :presentation="presentation"/>
+        <VerifierDialog :visible="dialog" @on-close="close" @on-save="save" @on-update="update" :verifier="verifier"/>
     </div>
 </template>

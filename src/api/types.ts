@@ -87,8 +87,8 @@ export interface PresentationScheme
     purpose:string;
     input_descriptors?:string;
     query?:string;
-    saved: string;
-    updated:string;
+    saved?: string;
+    updated?:string;
 }
 
 export interface VerifierScheme
@@ -99,7 +99,6 @@ export interface VerifierScheme
     did:string;
     admin_token:string;
     presentations:string;
-    presentationsString?:string;
-    saved: string;
-    updated:string;
+    saved?: string;
+    updated?:string;
 }
