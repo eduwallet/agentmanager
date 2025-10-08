@@ -27,7 +27,7 @@ const store = useTokenStore();
 
 function remove()
 {
-    emits('onRemove');
+    store.remove(props.module, props.name);
     emits('onClose');
 }
 

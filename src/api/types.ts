@@ -102,3 +102,18 @@ export interface VerifierScheme
     saved?: string;
     updated?:string;
 }
+
+export interface StatusListScheme
+{
+    id: number;
+    name: string;
+    purpose: string;
+    type: string;
+    size: number;
+    bitsize: number;
+    tokens: string;
+    messages?:string;
+    messagesString?:string;
+    saved?: string;
+    updated?:string;
+}

@@ -30,11 +30,6 @@ function onClose() {
     visible.value = false;
 }
 
-function onRemove()
-{
-    store.remove("issuer", agent.value);
-}
-
 const selectedPreset = ref('');
 function selectPreset()
 {
@@ -71,6 +66,6 @@ import { process_exit } from '@/api/admin';
         </el-form-item>
         <el-button @click="quit">Exit server</el-button>
         <router-view />
-        <PresetDialog module="issuer" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose" @on-remove="onRemove" />
+        <PresetDialog module="issuer" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose"/>
     </el-form>    
 </template>

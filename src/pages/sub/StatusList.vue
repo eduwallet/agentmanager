@@ -8,7 +8,7 @@ const allLabels = ref<string[]>([]);
 const store = useTokenStore();
 
 onMounted(() => {
-    allLabels.value = store.allAgents("verifier");
+    allLabels.value = store.allAgents("statuslist");
 });
 
 const visible = ref(false);
@@ -21,18 +21,20 @@ function add()
 }
 function edit()
 {
+    console.log('clicked edit for ', agent.value);
     visible.value = true;
 }
 
 function onClose() {
-    allLabels.value = store.allAgents("verifier");
+    allLabels.value = store.allAgents("statuslist");
     visible.value = false;
 }
 
 const selectedPreset = ref('');
 function selectPreset()
 {
-    store.load("verifier", selectedPreset.value);
+    console.log('selecting preset', selectedPreset.value);
+    store.load("statuslist", selectedPreset.value);
     token.value = store.token;
     url.value = store.url;
     agent.value = store.agent;
@@ -56,12 +58,10 @@ import { process_exit } from '@/api/admin';
             <el-button @click="edit">Edit</el-button>
         </el-form-item>
         <el-form-item class='actions' label="Actions">
-            <router-link to="/verifier/identifiers">Identifiers</router-link>
-            <router-link to="/verifier/presentations">Presentations</router-link>
-            <router-link to="/verifier/verifiers">Verifiers</router-link>
+            <router-link to="/statlist/configurations">Status Lists</router-link>
         </el-form-item>
         <el-button @click="quit">Exit server</el-button>
         <router-view />
-        <PresetDialog module="verifier" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose"/>
+        <PresetDialog module="statuslist" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose"/>
     </el-form>    
 </template>
