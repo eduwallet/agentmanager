@@ -13,12 +13,9 @@ function closeForm()
     emits('onClose');
 }
 
-const credentials = computed(() => {
-    return Object.keys(props.issuer.statusLists ?? {});
-})
-
 function update(field:string, value:any, index:number = -1)
 {
+    // make a deep clone of the object, but skip the reactive elements
     const metadata = JSON.parse(JSON.stringify(props.issuer.metadata));
     switch (field) {
         case 'authorization_servers':
@@ -73,6 +70,8 @@ function update(field:string, value:any, index:number = -1)
 
 function addDisplay()
 {
+    console.log('adding Display');
+    // make a deep clone of the object, but skip the reactive elements
     const metadata = JSON.parse(JSON.stringify(props.issuer.metadata));
     if (!metadata.display) {
         metadata.display = [];
@@ -83,6 +82,7 @@ function addDisplay()
 
 function addCredential()
 {
+    // make a deep clone of the object, but skip the reactive elements
     const metadata = JSON.parse(JSON.stringify(props.issuer.metadata));
     if (!metadata.credential_configurations_supported) {
         metadata.credential_configurations_supported = {};
@@ -91,7 +91,7 @@ function addCredential()
     emits('onUpdate', metadata);
 }
 
-const credentialIds = computed(() => Object.keys(props.issuer.metadata.credential_configurations_supported));
+const credentialIds = computed(() => Object.keys(props.issuer.metadata?.credential_configurations_supported ?? {}));
 
 import MetadataDisplay from './components/MetadataDisplay.vue';
 import MetadataCredentials from './components/MetadataCredentials.vue';
@@ -101,14 +101,14 @@ import { Plus } from '@element-plus/icons-vue';
     <el-dialog :model-value="props.visible" title="Edit Metadata" :close-on-click-modal="false"  :before-close="(done:any) => { closeForm(); done(false); }">
       <el-form>
         <el-form-item label="Auth Servers">
-          <el-input :model-value="props.issuer.metadata.authorization_servers" @update:model-value="(e) => update('authorization_servers', e)"/>
+          <el-input :model-value="props.issuer.metadata?.authorization_servers ?? ''" @update:model-value="(e) => update('authorization_servers', e)"/>
         </el-form-item>
         <el-form-item label="Batch size">
-          <el-input :model-value="props.issuer.metadata.batch_credential_issuance?.batch_size" @update:model-value="(e) => update('batchsize', e)"/>
+          <el-input :model-value="props.issuer.metadata?.batch_credential_issuance?.batch_size ?? ''" @update:model-value="(e) => update('batchsize', e)"/>
         </el-form-item>
         <div class="display">
             <label class="display">Display</label>
-            <MetadataDisplay v-for="(key, index) in props.issuer.metadata.display" :key="index" :display="key" @on-update="(e) => update('display', e, index)" />
+            <MetadataDisplay v-for="(key, index) in (props.issuer.metadata?.display ?? {})" :key="index" :display="key" @on-update="(e) => update('display', e, index)" />
             <el-button class='addicon' type="primary" :icon="Plus" @click="addDisplay"/>
         </div>
         <div class="credentials">

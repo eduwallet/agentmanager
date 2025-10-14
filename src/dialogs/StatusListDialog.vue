@@ -26,9 +26,7 @@ function addCred()
 
 function update(index:number, key:string, field:FieldValue)
 {
-    console.log('status list dialog update', index, key, field);
-    const statlists = JSON.parse(JSON.stringify(props.issuer.statusLists));
-    console.log('cloned value is ', statlists);
+    const statlists = JSON.parse(JSON.stringify(props.issuer.statusLists ?? {}));
     const keys = Object.keys(statlists);
     if (index < 0 || index >= keys.length) {
         return;
@@ -68,13 +66,22 @@ function update(index:number, key:string, field:FieldValue)
     }
 }
 
+function getIssuerStatusList(key:string)
+{
+    const retval = props.issuer.statusLists[key] ?? [];
+    if (!Array.isArray(retval)) {
+        return [retval];
+    }
+    return retval;
+}
+
 import StatusCredentialEntry from './components/StatusCredentialEntry.vue';
 import { FieldValue } from '@/types';
 </script>
 <template>
     <el-dialog :model-value="props.visible" title="Edit Status Lists" :close-on-click-modal="false"  :before-close="(done:any) => { closeForm(); done(false); }">
       <el-form>
-        <StatusCredentialEntry v-for="(key, index) in credentials" :key="index" :credential="key" :statuslists="props.issuer.statusLists[key]" @on-update="(e) => update(index, key, e)"/>
+        <StatusCredentialEntry v-for="(key, index) in credentials" :key="index" :credential="key" :statuslists="getIssuerStatusList(key)" @on-update="(e) => update(index, key, e)"/>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
