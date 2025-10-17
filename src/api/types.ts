@@ -18,6 +18,8 @@ export interface IdentifierScheme
     did: string;
     provider: string;
     alias: string;
+    path?:string;
+    services?:string;
     saved: string;
     updated:string;
     keys:KeyScheme[];
@@ -28,6 +30,8 @@ export interface IdentifierSaveData
     did: string;
     provider: string;
     alias: string;
+    path?:string;
+    services?:string;
     keytype:string;
     original:string;
 }

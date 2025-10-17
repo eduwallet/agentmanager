@@ -32,6 +32,8 @@ async function submitForm()
     await save_identifier({
         did: props.identifier.did,
         alias: props.identifier.alias,
+        ...(props.identifier.path && props.identifier.path.length && {path:props.identifier.path}),
+        ...(props.identifier.services && props.identifier.services.length && {services:props.identifier.services}),
         provider: props.identifier.provider,
         keytype: props.keytype,
         original: props.original
@@ -52,6 +54,12 @@ const types = ["Secp256r1", "Secp256k1", "Ed25519", "RSA"];
         </el-form-item>
         <el-form-item label="Alias">
           <el-input :model-value="props.identifier.alias" @update:model-value="(e) => update('alias', e)"/>
+        </el-form-item>
+        <el-form-item label="Path">
+          <el-input :model-value="props.identifier.path ?? ''" @update:model-value="(e) => update('path', e)"/>
+        </el-form-item>
+        <el-form-item label="Services">
+          <el-input :model-value="props.identifier.services ?? ''" @update:model-value="(e) => update('services', e)" :rows="8" type="textarea" :autosize="{minRows:5, maxRows:15}"/>
         </el-form-item>
         <el-form-item label="Provider">
             <el-select :model-value="props.identifier.provider" @update:model-value="(e) => update('provider', e)">
