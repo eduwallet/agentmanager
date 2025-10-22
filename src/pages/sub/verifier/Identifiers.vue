@@ -26,6 +26,7 @@ const identifierDialog = ref(false);
 const identifier:Ref<IdentifierScheme> = ref({
         did:'',
         alias: '',
+        path: '',
         provider: '',
         saved: '',
         updated: '',
@@ -39,6 +40,7 @@ function add()
     identifier.value = {
         did:'',
         alias: '',
+        path: '',
         provider: 'did:jwk',
         saved: '',
         updated: '',
@@ -71,6 +73,8 @@ function onUpdateIdentifier(field:FieldValue)
         case 'keytype': keytype.value = field.value; break;
         case 'provider': identifier.value.provider = field.value; break;
         case 'alias': identifier.value.alias = field.value; break;
+        case 'path': identifier.value.path = field.value; break;
+        case 'services': identifier.value.services = field.value; break;
     }
 }
 
