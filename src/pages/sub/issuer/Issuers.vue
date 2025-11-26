@@ -32,6 +32,7 @@ const issuer:Ref<IssuerScheme> = ref({
     authorizationEndpoint: '',
     tokenEndpoint: '',
     clientId: '',
+    clientSecret: '',
     metadata: {},
     statusLists: {}
 });
@@ -47,6 +48,7 @@ function add()
         authorizationEndpoint: '',
         tokenEndpoint: '',
         clientId: '',
+        clientSecret: '',
         metadata: {},
         statusLists: {}
     }
@@ -68,6 +70,7 @@ function update(field:FieldValue)
         case 'authorizationEndpoint':
         case 'tokenEndpoint':
         case 'clientId':
+        case 'clientSecret':
         case 'did': 
         case 'metadata':
         case 'statusLists':

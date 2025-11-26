@@ -55,6 +55,7 @@ export interface IssuerScheme
     authorizationEndpoint?:string;
     tokenEndpoint?:string;
     clientId?:string;
+    clientSecret?:string;
     did:string;
     metadata?:any;
     statusLists?:any;

@@ -89,6 +89,9 @@ import MetadataDialog from './MetadataDialog.vue';
         <el-form-item label="Client ID">
           <el-input :model-value="props.issuer.clientId" @update:model-value="(e) => update('clientId', e)"/>
         </el-form-item>
+        <el-form-item label="Client Secret">
+          <el-input :model-value="props.issuer.clientSecret" @update:model-value="(e) => update('clientSecret', e)"/>
+        </el-form-item>
         <StatusListDialog :visible="statdialog" :issuer="props.issuer" @on-close="closeStat" @on-update="(e) => updateStat(e)"/>
         <MetadataDialog :visible="metadialog" :issuer="props.issuer" @on-close="closeMeta" @on-update="(e) => updateMeta(e)"/>
       </el-form>

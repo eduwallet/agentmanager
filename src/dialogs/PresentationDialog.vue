@@ -39,8 +39,10 @@ async function submit()
         }
     }
     catch (e:any) {
-        alert('The PEX content should be an array of input descriptors. The value does not resolve in a proper array.');
-        return;
+        if ((props.presentation.input_descriptors ?? '').trim() != '') {
+            alert('The PEX content should be an array of input descriptors. The value does not resolve in a proper array.');
+            return;
+        }
     }
 
     let dcql:any = null;
@@ -56,8 +58,14 @@ async function submit()
         }
     }
     catch (e:any) {
-        alert("The DCQL should be a proper JSON specification. The value does not resolve correctly");
-        return;
+        if ((props.presentation.query ?? '').trim() != '') {
+            alert("The DCQL should be a proper JSON specification. The value does not resolve correctly");
+            return;
+        }
+    }
+
+    if (dcql == null && input_descriptors == null) {
+        alert("Enter one of presentation or query, you cannot leave both empty");
     }
 
     await save_presentation({
