@@ -8,7 +8,22 @@ export async function list_verifiers()
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
             }
-            return result.json.data;
+            const verifiers = result.json.data.map((v) => {
+                try {
+                    v.metadata = JSON.stringify(JSON.parse(v.metadata), null, 2);
+                }
+                catch (e) {
+                    console.log(e);
+                    if (v.metadata) {
+                        console.log('deleting non-JSON metadata value', v.metadata);
+                        delete v.metadata;
+                    }
+                }
+                console.log('returning value ', v);
+                return v;
+            });
+            console.log('verifiers', verifiers);
+            return verifiers;
         })
 }
 
@@ -18,6 +33,14 @@ export async function get_verifier(id:VerifierScheme)
         .then((result) => {
             if (result.status !== 200) {
                 throw new Error("Invalid return status");
+            }
+            try {
+                result.json.metadata = JSON.stringify(JSON.parse(result.json.metadata), null, 2);
+            }
+            catch {
+                if (result.json.metadata) {
+                    delete result.json.metadata;
+                }
             }
             return result.json;
         });

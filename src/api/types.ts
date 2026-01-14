@@ -104,6 +104,7 @@ export interface VerifierScheme
     did:string;
     admin_token:string;
     presentations:string;
+    metadata?:string;
     saved?: string;
     updated?:string;
 }

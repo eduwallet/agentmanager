@@ -35,13 +35,23 @@ async function remove()
 
 async function submit()
 {
+    try {
+      const metadata = JSON.parse(props.verifier.metadata ?? '{}');
+    }
+    catch (e) {
+      console.log(e);
+      alert('Metadata is not correct JSON');
+      return;
+    }
+
     await save_verifier({
         id: props.verifier.id,
         name: props.verifier.name,
         path: props.verifier.path,
         did: props.verifier.did,
         admin_token: props.verifier.admin_token,
-        presentations: props.verifier.presentations
+        presentations: props.verifier.presentations,
+        metadata: props.verifier.metadata
     });
     emits('onSave');
 }
@@ -85,6 +95,9 @@ function updatePresentations(e)
                 <el-option value="0" label="Select" />
                 <el-option v-for="p in presentations" :key="p.id" :value="p.id" :label="p.shortname"/>
             </el-select>
+        </el-form-item>
+        <el-form-item label="Metadata">
+          <el-input :model-value="props.verifier.metadata ?? '{}'" @update:model-value="(e) => update('metadata', e)"   :rows="8" type="textarea" :autosize="{minRows:5, maxRows:15}"/>
         </el-form-item>
     </el-form>
       <template #footer>

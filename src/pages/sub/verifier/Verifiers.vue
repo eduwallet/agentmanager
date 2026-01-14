@@ -31,6 +31,7 @@ const verifier:Ref<VerifierScheme> = ref({
         did: '',
         admin_token: '',
         presentations: '[]',
+        metadata: '{}',
         saved: '',
         updated: '',
 });
@@ -44,6 +45,7 @@ function add()
         did: '',
         admin_token: '',
         presentations: '[]',
+        metadata: '{}',
         saved: '',
         updated: '',
     };
@@ -64,6 +66,7 @@ function update(field:FieldValue)
         case 'did': verifier.value.did = field.value; break;
         case 'admin_token': verifier.value.admin_token = field.value; break;
         case 'presentations': verifier.value.presentations = field.value; break;
+        case 'metadata': verifier.value.metadata = field.value; break;
     }
 }
 
