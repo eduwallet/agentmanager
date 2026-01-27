@@ -43,8 +43,14 @@ async function quit()
     await process_exit();
 }
 
+async function exportConfig()
+{
+    await export_configuration();
+}
+
+
 import PresetDialog from '@/dialogs/PresetDialog.vue';
-import { process_exit } from '@/api/admin';
+import { export_configuration, process_exit } from '@/api/admin';
 </script>
 <template>
     <el-form label-position="left" label-width="auto">
@@ -60,7 +66,10 @@ import { process_exit } from '@/api/admin';
             <router-link to="/verifier/presentations">Presentations</router-link>
             <router-link to="/verifier/verifiers">Verifiers</router-link>
         </el-form-item>
-        <el-button @click="quit">Exit server</el-button>
+        <div class="buttons">
+            <el-button @click="quit">Exit server</el-button>
+            <el-button @click="exportConfig">Export configuration</el-button>
+        </div>
         <router-view />
         <PresetDialog module="verifier" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose"/>
     </el-form>    

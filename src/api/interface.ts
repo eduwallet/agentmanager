@@ -14,6 +14,11 @@ function glueParameters(path:string, data:any)
 
 export async function bearerFetch(method: string, path:string, data:any = null)
 {
+    return bearerFetchRaw(method, path, data).then(async (r) => { return {status: r.status, json: await r.json() }});
+}
+
+export async function bearerFetchRaw(method: string, path:string, data:any = null)
+{
     const store = useTokenStore();
 
     const contentHeaders = {
@@ -36,5 +41,5 @@ export async function bearerFetch(method: string, path:string, data:any = null)
         dataPath = glueParameters(path, data);
     }
 
-    return fetch(store.url + '/api/' + path, fetchOptions).then(async (r) => { return {status: r.status, json: await r.json() }});
+    return fetch(store.url + '/api/' + path, fetchOptions);
 }

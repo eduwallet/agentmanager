@@ -4,6 +4,10 @@ import * as path from 'path';
 
 export default ({mode}) => {
     return defineConfig({
+        server: {
+            port: 5174,
+            strictPort: true
+        },
         //    root: path.resolve(__dirname, 'src'),
         base: '/agentmanager/',
         resolve: {

@@ -23,7 +23,6 @@ function closeForm()
 async function remove()
 {
     await delete_identifier(props.identifier);
-    console.log('emitting on close');
     emits('onSave');
 }
 

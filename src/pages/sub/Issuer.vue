@@ -44,9 +44,13 @@ async function quit()
 {
     await process_exit();
 }
+async function exportConfiguration()
+{
+    await export_configuration();
+}
 
 import PresetDialog from '@/dialogs/PresetDialog.vue';
-import { process_exit } from '@/api/admin';
+import { export_configuration, process_exit } from '@/api/admin';
 </script>
 <template>
     <el-form label-position="left" label-width="auto">
@@ -64,7 +68,10 @@ import { process_exit } from '@/api/admin';
             <router-link to="/issuer/contexts">Contexts</router-link>
             <router-link to="/issuer/vcts">VCTs</router-link>
         </el-form-item>
-        <el-button @click="quit">Exit server</el-button>
+        <div class="buttons">
+            <el-button @click="quit">Exit server</el-button>
+            <el-button @click="exportConfiguration">Export configuration</el-button>
+        </div>
         <router-view />
         <PresetDialog module="issuer" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose"/>
     </el-form>    

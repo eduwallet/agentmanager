@@ -13,16 +13,13 @@ export async function list_verifiers()
                     v.metadata = JSON.stringify(JSON.parse(v.metadata), null, 2);
                 }
                 catch (e) {
-                    console.log(e);
                     if (v.metadata) {
                         console.log('deleting non-JSON metadata value', v.metadata);
                         delete v.metadata;
                     }
                 }
-                console.log('returning value ', v);
                 return v;
             });
-            console.log('verifiers', verifiers);
             return verifiers;
         })
 }

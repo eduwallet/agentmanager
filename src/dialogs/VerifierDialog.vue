@@ -57,7 +57,7 @@ async function submit()
 }
 
 const chosenPres = computed(() => {
-    const lst = JSON.stringify(props.verifier.presentations);
+    const lst = JSON.parse(props.verifier.presentations);
     const ids = presentations.value.filter((p) => lst.includes(p.shortname)).map((p) => p.id);
     return ids;
 })
@@ -71,7 +71,7 @@ function updatePresentations(e)
         lst.push(p.shortname);
       }
     }
-    emits('onUpdate', {field:'presentations', value: lst});
+    emits('onUpdate', {field:'presentations', value: JSON.stringify(lst)});
 }
 
 </script>
