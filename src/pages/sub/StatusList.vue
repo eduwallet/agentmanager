@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useTokenStore } from '@/stores/token';
 import { ref, onMounted } from 'vue';
+import { process_exit, export_configuration } from '@/api/admin';
 const token = ref('');
 const url = ref('');
 const agent = ref('');
@@ -45,8 +46,12 @@ async function quit()
     await process_exit();
 }
 
+async function exportConfig()
+{
+    await export_configuration();
+}
+
 import PresetDialog from '@/dialogs/PresetDialog.vue';
-import { process_exit } from '@/api/admin';
 </script>
 <template>
     <el-form label-position="left" label-width="auto">
@@ -60,7 +65,10 @@ import { process_exit } from '@/api/admin';
         <el-form-item class='actions' label="Actions">
             <router-link to="/statlist/configurations">Status Lists</router-link>
         </el-form-item>
-        <el-button @click="quit">Exit server</el-button>
+        <div class="buttons">
+            <el-button @click="quit">Exit server</el-button>
+            <el-button @click="exportConfig">Export configuration</el-button>
+        </div>
         <router-view />
         <PresetDialog module="statuslist" :visible="visible" :name="agent" :url="url" :token="token" @on-close="onClose"/>
     </el-form>    
