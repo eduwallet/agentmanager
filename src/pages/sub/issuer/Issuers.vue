@@ -73,7 +73,6 @@ function update(field:FieldValue)
         case 'clientSecret':
         case 'did': 
         case 'metadata':
-        case 'statusLists':
             issuer.value[field.field] = field.value; 
             break;
     }

@@ -5,10 +5,12 @@ export interface FieldValue
     index?:number;
 }
 
-export interface StatusList {
-    url:string;
-    revoke:string;
-    token:string;
+export interface StatusListConfig {
+    name:string;
+    type:string;
+    size:number;
+    bitSize:number;
+    purpose:string;
 }
 
 export interface MetadataLogo {
@@ -29,4 +31,5 @@ export interface MetadataCredential {
     credential_metadata:string;
     display: any;
     extends: any;
+    statusLists?:StatusListConfig[];
 }

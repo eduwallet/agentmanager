@@ -43,26 +43,12 @@ table.listing {
         .el-form-item__label { min-width: 200px; }
     }
 
-    .statuslistcredential {
+    .display, .credentials, .statuslists {
         position: relative;
 
-        .statuslistblock {
-            padding-left: 40px;
-        }
-
-        .addicon {
-            position: absolute;
-            right: 10px;
-            bottom: -22px;
-        }
-    }
-
-    .display, .credentials {
-        position: relative;
-
-        label.display {
+        label.display, label.statuslists {
             text-align: right;
-            min-width: 200px; 
+            min-width: 200px;
             font-weight: 700;
             display: inline-block;
             line-height: 2rem;
@@ -73,5 +59,18 @@ table.listing {
             right: 10px;
             bottom: -22px;
         }
+    }
+
+    .statuslists {
+        .statuslistblock {
+            padding-left: 40px;
+        }
+    }
+
+    .statuslistrow {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-bottom: 10px;
     }
 }

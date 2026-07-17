@@ -32,21 +32,6 @@ async function submitForm()
     emits('onSave');
 }
 
-const statdialog = ref(false);
-function openStat()
-{
-  statdialog.value = true;
-}
-function closeStat()
-{
-  statdialog.value = false;
-}
-async function updateStat(e:any)
-{
-  console.log('updating status list value ', e);
-  emits('onUpdate', {field: 'statusLists', value: e});
-}
-
 const metadialog = ref(false);
 function openMeta()
 {
@@ -62,7 +47,6 @@ async function updateMeta(e:any)
   emits('onUpdate', {field: 'metadata', value: e});
 }
 
-import StatusListDialog from './StatusListDialog.vue';
 import MetadataDialog from './MetadataDialog.vue';
 </script>
 <template>
@@ -92,12 +76,10 @@ import MetadataDialog from './MetadataDialog.vue';
         <el-form-item label="Client Secret">
           <el-input :model-value="props.issuer.clientSecret" @update:model-value="(e) => update('clientSecret', e)"/>
         </el-form-item>
-        <StatusListDialog :visible="statdialog" :issuer="props.issuer" @on-close="closeStat" @on-update="(e) => updateStat(e)"/>
         <MetadataDialog :visible="metadialog" :issuer="props.issuer" @on-close="closeMeta" @on-update="(e) => updateMeta(e)"/>
       </el-form>
       <template #footer>
         <span class="dialog-footer">
-          <el-button type="success" @click="openStat">StatusLists</el-button>
           <el-button type="success" @click="openMeta">Metadata</el-button>
           <el-button type="danger" @click="remove">Delete</el-button>
           <el-button type="warning" @click="closeForm">Cancel</el-button>

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { list_credentials } from '@/api/credentials';
 import { CredentialScheme } from '@/api/types';
-import { MetadataCredential } from '@/types';
+import { FieldValue, MetadataCredential } from '@/types';
 import { computed, onMounted, ref } from 'vue';
 import type { Ref } from 'vue';
 
@@ -43,7 +43,59 @@ function update(fieldName:string, value: any)
     emits('onUpdate', md);
 }
 
+function addStatusList()
+{
+    const md = JSON.parse(JSON.stringify(props.credential));
+    md.original = props.name;
+    md.name = props.name;
+    if (!md.statusLists) {
+        md.statusLists = [];
+    }
+    md.statusLists.push({name:'', type:'statuslist+jwt', size:131072, bitSize:1, purpose:''});
+    emits('onUpdate', md);
+}
+
+function updateStatusList(index:number, field:FieldValue)
+{
+    const md = JSON.parse(JSON.stringify(props.credential));
+    md.original = props.name;
+    md.name = props.name;
+    if (!md.statusLists || index < 0 || index >= md.statusLists.length) {
+        return;
+    }
+    switch (field.field) {
+        case 'name':
+        case 'type':
+        case 'purpose':
+            md.statusLists[index][field.field] = field.value;
+            break;
+        case 'size':
+        case 'bitSize': {
+            const num = parseInt(field.value);
+            md.statusLists[index][field.field] = isNaN(num) ? 0 : num;
+            break;
+        }
+    }
+    emits('onUpdate', md);
+}
+
+function removeStatusList(index:number)
+{
+    const md = JSON.parse(JSON.stringify(props.credential));
+    md.original = props.name;
+    md.name = props.name;
+    if (!md.statusLists || index < 0 || index >= md.statusLists.length) {
+        return;
+    }
+    md.statusLists.splice(index, 1);
+    emits('onUpdate', md);
+}
+
 const displayValue = computed(() => JSON.stringify(props.credential?.display ?? {}, null, 2));
+const statusLists = computed(() => props.credential.statusLists ?? []);
+
+import MetadataStatusListEntry from './MetadataStatusListEntry.vue';
+import { Plus } from '@element-plus/icons-vue';
 </script>
 <template>
     <div class="metadatadisplay">
@@ -65,6 +117,15 @@ const displayValue = computed(() => JSON.stringify(props.credential?.display ?? 
             <el-option v-for="type in credentials" :key="type.id" :value="type.name" :label="type.name"/>
           </el-select>
         </el-form-item>
+        <div class="statuslists">
+            <label class="statuslists">Status Lists</label>
+            <div class="statuslistblock">
+                <MetadataStatusListEntry v-for="(sl, index) in statusLists" :key="index" :statuslist="sl" :show-add="index === statusLists.length - 1" @on-update="(e) => updateStatusList(index, e)" @on-remove="() => removeStatusList(index)" @on-add="addStatusList" />
+                <div v-if="!statusLists.length" class="statuslistrow">
+                    <el-button class='statuslist-add' type="primary" :icon="Plus" @click="addStatusList"/>
+                </div>
+            </div>
+        </div>
         <hr/>
     </div>
 </template>
